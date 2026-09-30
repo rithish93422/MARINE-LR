@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Tracking | MarineLoRa</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Marine<span>LoRa</span>
+        </div>
+
+        <div class="nav-text">
+            Marine Tracking Dashboard
+        </div>
+
+    </nav>
+
+
+    <!-- DASHBOARD -->
+
+    <main class="dashboard">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <div class="badge">
+                     LoRa NETWORK
+                </div>
+
+                <h1>
+                    Marine Tracking
+                </h1>
+
+                <p>
+                    Monitor your registered boat
+                    and communication status.
+                </p>
+
+            </div>
+
+            <div class="status">
+                 SYSTEM ONLINE
+            </div>
+
+        </div>
+
+
+        <!-- BOAT INFORMATION -->
+
+        <section class="dashboard-grid">
+
+
+            <div class="dashboard-card">
+
+                <h3>
+                     Boat Information
+                </h3>
+
+                <div class="info-row">
+
+                    <span>Boat Name</span>
+
+                    <strong id="displayBoatName">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>Boat Number</span>
+
+                    <strong id="displayBoatNumber">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>LoRa Device ID</span>
+
+                    <strong
+                        id="displayLoraId"
+                        class="lora-id"
+                    >
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>Phone</span>
+
+                    <strong id="displayPhone">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div class="verified">
+
+                    ✓ PHONE VERIFIED
+
+                </div>
+
+            </div>
+
+
+            <!-- LORA STATUS -->
+
+            <div class="dashboard-card">
+
+                <h3>
+                     LoRa Communication
+                </h3>
+
+                <div class="connection-status">
+
+                    <div class="signal-circle">
+                        
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Connected
+                        </strong>
+
+                        <p>
+                            Waiting for LoRa data...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>Network</span>
+
+                    <strong>
+                        LoRa 433 MHz
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>Device</span>
+
+                    <strong id="deviceStatus">
+                        ONLINE
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- GPS -->
+
+        <section class="dashboard-card map-card">
+
+            <h3>
+                 GPS Location
+            </h3>
+
+            <div class="map-placeholder">
+
+                <div class="map-icon">
+                    
+                </div>
+
+                <h2>
+                    GPS Tracking
+                </h2>
+
+                <p>
+                    GPS coordinates received from
+                    the registered LoRa device will
+                    appear here.
+                </p>
+
+                <div class="coordinates">
+
+                    Latitude:
+                    <span id="latitude">
+                        Waiting...
+                    </span>
+
+                    <br>
+
+                    Longitude:
+                    <span id="longitude">
+                        Waiting...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LAST MESSAGE -->
+
+        <section class="dashboard-card">
+
+            <h3>
+                 Last LoRa Message
+            </h3>
+
+            <div class="message-box">
+
+                <span id="lastMessage">
+                    No LoRa message received yet.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <div class="dashboard-actions">
+
+            <a
+                href="register.html"
+                class="button secondary-button"
+            >
+                + Register Another Boat
+            </a>
+
+            <a
+                href="index.html"
+                class="back-link"
+            >
+                ← Home
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // =================================
+        // LOAD REGISTERED BOAT
+        // =================================
+
+        const boatName =
+            localStorage.getItem("boatName");
+
+        const boatNumber =
+            localStorage.getItem("boatNumber");
+
+        const loraId =
+            localStorage.getItem("loraId");
+
+        const phone =
+            localStorage.getItem("phoneNumber");
+
+        const verified =
+            localStorage.getItem("phoneVerified");
+
+
+        document.getElementById("displayBoatName")
+            .textContent =
+            boatName || "Not registered";
+
+
+        document.getElementById("displayBoatNumber")
+            .textContent =
+            boatNumber || "--";
+
+
+        document.getElementById("displayLoraId")
+            .textContent =
+            loraId || "--";
+
+
+        document.getElementById("displayPhone")
+            .textContent =
+            phone ? "+91 " + phone : "--";
+
+
+        // =================================
+        // CHECK VERIFICATION
+        // =================================
+
+        if (verified !== "true") {
+
+            alert(
+                "Please verify your phone number first."
+            );
+
+            window.location.href =
+                "register.html";
+
+        }
+
+
+        // =================================
+        // DEMO LORA MESSAGE
+        // =================================
+
+        function simulateLoRaMessage() {
+
+            if (!loraId) return;
+
+
+            const message =
+                "FROM:" +
+                loraId +
+                " | STATUS:NORMAL";
+
+
+            document.getElementById("lastMessage")
+                .textContent =
+                message;
+
+        }
+
+
+        // Demo message after 3 seconds
+
+        setTimeout(
+            simulateLoRaMessage,
+            3000
+        );
+
+    </script>
+
+
+</body>
+
+</html>
