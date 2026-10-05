@@ -1,39 +1,187 @@
-<section class="messages-section">
+<!DOCTYPE html>
+<html lang="en">
 
-  <h2>MarineLoRa Messages</h2>
+<head>
 
-  <div id="messageList">
-    Waiting for messages...
-  </div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-</section>
+    <title>Dashboard | MarineLoRa</title>
 
-<script
-  type="module"
-  src="./js/firebase-config.js">
-</script>
+    <link rel="stylesheet" href="style.css">
 
-<script
-  src="./js/dashboard.js">
-</script>
-<section class="emergency-section">
+</head>
 
-    <div class="emergency-header">
-        <div>
-            <h2> Emergency Monitoring</h2>
-            <p>Live emergency messages received from boats</p>
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Marine<span>LoRa</span>
         </div>
 
-        <span id="emergencyStatus" class="status-badge">
-            WAITING
-        </span>
-    </div>
+        <ul class="nav-links">
 
-    <div id="emergencyList" class="emergency-list">
-        <div class="empty-emergency">
-            <h3>No Emergency</h3>
-            <p>Waiting for emergency messages...</p>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="tracking.html">Tracking</a>
+            </li>
+
+            <li>
+                <a href="register.html">Register Boat</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <main class="dashboard-page">
+
+
+        <div class="dashboard-header">
+
+            <h1>MarineLoRa Dashboard</h1>
+
+            <p>
+                Monitor boats and receive LoRa communication
+            </p>
+
         </div>
-    </div>
 
-</section>
+
+        <div class="status-bar">
+
+            <div class="status">
+
+                <span
+                    class="status-dot status-online"
+                    id="connectionDot"
+                ></span>
+
+                <span id="connectionStatus">
+                    System Online
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    LoRa Gateway:
+                </span>
+
+                <strong>
+                    ACTIVE
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <section class="storage-panel">
+
+            <h3>Emergency Monitoring</h3>
+
+            <div class="storage-info">
+
+
+                <div class="storage-item">
+
+                    <div
+                        class="value"
+                        id="boatCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Active Boats
+                    </div>
+
+                </div>
+
+
+                <div class="storage-item">
+
+                    <div
+                        class="value"
+                        id="messageCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        Messages Received
+                    </div>
+
+                </div>
+
+
+                <div class="storage-item">
+
+                    <div
+                        class="value"
+                        id="sosCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="label">
+                        SOS Messages
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="messages-section">
+
+            <h2>
+                Received Messages
+            </h2>
+
+            <div id="messageList">
+
+                <div class="empty-state">
+
+                    <h3>
+                        No messages received
+                    </h3>
+
+                    <p>
+                        Waiting for LoRa communication...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <footer class="footer">
+
+        <p>
+            © 2026 <span>MarineLoRa</span>
+        </p>
+
+    </footer>
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
