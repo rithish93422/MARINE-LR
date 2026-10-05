@@ -4,637 +4,122 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Marine Tracking | MarineLoRa</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <title>Boat Tracking | MarineLoRa</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <style>
-
-        /* MAP */
-
-        #map {
-            width: 100%;
-            height: 450px;
-            border-radius: 15px;
-            border: 1px solid #294454;
-            overflow: hidden;
-        }
-
-        .map-section {
-            margin-top: 25px;
-        }
-
-        .location-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .location-box {
-            padding: 18px;
-            background: #071521;
-            border: 1px solid #294454;
-            border-radius: 10px;
-        }
-
-        .location-box span {
-            display: block;
-            color: #91a9b9;
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-
-        .location-box strong {
-            color: #38c7ff;
-            font-size: 17px;
-        }
-
-        .gps-status {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(56,199,255,0.08);
-            border: 1px solid #294454;
-            color: #38c7ff;
-        }
-
-        @media(max-width:700px) {
-
-            .location-info {
-                grid-template-columns: 1fr;
-            }
-
-            #map {
-                height: 350px;
-            }
-
-        }
-
-    </style>
-
 </head>
-
 
 <body>
 
+    <nav class="navbar">
 
-<!-- NAVBAR -->
+        <div class="logo">
+            Marine<span>LoRa</span>
+        </div>
 
-<nav class="navbar">
+        <ul class="nav-links">
 
-    <div class="logo">
-        Marine<span>LoRa</span>
-    </div>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
 
-    <div class="nav-text">
-        Marine Tracking Dashboard
-    </div>
+            <li>
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+            </li>
 
-</nav>
+            <li>
+                <a href="register.html">
+                    Register Boat
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
 
 
-
-<!-- DASHBOARD -->
-
-<main class="dashboard">
+    <main class="dashboard-page">
 
 
-    <div class="dashboard-header">
+        <div class="dashboard-header">
 
-        <div>
-
-            <div class="badge">
-                 LORA NETWORK
-            </div>
-
-            <h1>
-                Marine Tracking
-            </h1>
+            <h1>Boat Tracking</h1>
 
             <p>
-                Track your registered boat using GPS.
+                View the latest received boat location
             </p>
 
         </div>
 
-        <div class="status">
-            ● SYSTEM ONLINE
-        </div>
 
-    </div>
+        <section class="map-container">
 
-
-
-    <!-- BOAT INFORMATION -->
-
-    <section class="dashboard-grid">
-
-
-        <div class="dashboard-card">
-
-            <h3>
-                🚤 Boat Information
-            </h3>
-
-
-            <div class="info-row">
-
-                <span>
-                    Boat Name
-                </span>
-
-                <strong id="displayBoatName">
-                    --
-                </strong>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <span>
-                    Boat Number
-                </span>
-
-                <strong id="displayBoatNumber">
-                    --
-                </strong>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <span>
-                    LoRa Device ID
-                </span>
-
-                <strong id="displayLoraId"
-                        class="lora-id">
-                    --
-                </strong>
-
-            </div>
-
-
-            <div class="verified">
-                ✓ PHONE VERIFIED
-            </div>
-
-        </div>
-
-
-
-        <!-- LORA -->
-
-        <div class="dashboard-card">
-
-            <h3>
-                📡 LoRa Communication
-            </h3>
-
-
-            <div class="connection-status">
-
-                <div class="signal-circle">
-                    📡
-                </div>
+            <div class="map-placeholder">
 
                 <div>
 
-                    <strong>
-                        Connected
-                    </strong>
+                    <h2>
+                        📍 Boat Location
+                    </h2>
 
                     <p>
-                        Marine LoRa network active
+                        Waiting for GPS coordinates...
                     </p>
 
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="info-row">
 
-                <span>
-                    Frequency
-                </span>
+        <section class="messages-section">
 
-                <strong>
-                    433 MHz
-                </strong>
+            <h2>
+                Latest Location
+            </h2>
+
+            <div id="locationDetails">
+
+                <div class="empty-state">
+
+                    <h3>
+                        No location available
+                    </h3>
+
+                    <p>
+                        LoRa GPS data will appear here.
+                    </p>
+
+                </div>
 
             </div>
 
-
-            <div class="info-row">
-
-                <span>
-                    Device
-                </span>
-
-                <strong>
-                    ONLINE
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
+        </section>
 
 
+    </main>
 
-    <!-- =========================
-         GPS MAP
-    ========================== -->
 
-    <section class="dashboard-card map-section">
+    <footer class="footer">
 
-        <h3>
-            📍 Boat GPS Tracking
-        </h3>
-
-        <p style="color:#91a9b9; margin-bottom:20px;">
-            The blue marker represents the current GPS location.
+        <p>
+            © 2026 <span>MarineLoRa</span>
         </p>
 
+    </footer>
 
-        <!-- MAP -->
 
-        <div id="map"></div>
-
-
-        <!-- LOCATION -->
-
-        <div class="location-info">
-
-            <div class="location-box">
-
-                <span>
-                    Latitude
-                </span>
-
-                <strong id="latitude">
-                    Waiting...
-                </strong>
-
-            </div>
-
-
-            <div class="location-box">
-
-                <span>
-                    Longitude
-                </span>
-
-                <strong id="longitude">
-                    Waiting...
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="gpsStatus"
-            class="gps-status"
-        >
-            📡 Getting GPS location...
-        </div>
-
-    </section>
-
-
-
-    <!-- LAST MESSAGE -->
-
-    <section class="dashboard-card">
-
-        <h3>
-            💬 Last LoRa Message
-        </h3>
-
-        <div class="message-box">
-
-            <span id="lastMessage">
-                Waiting for LoRa message...
-            </span>
-
-        </div>
-
-    </section>
-
-
-
-    <div class="dashboard-actions">
-
-        <a
-            href="register.html"
-            class="button secondary-button"
-        >
-            + Register Another Boat
-        </a>
-
-        <a
-            href="index.html"
-            class="back-link"
-        >
-            ← Home
-        </a>
-
-    </div>
-
-
-</main>
-
-
-
-<!-- LEAFLET -->
-
-<script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
-
-
-<script>
-
-
-/* =====================================
-   LOAD BOAT INFORMATION
-===================================== */
-
-const boatName =
-    localStorage.getItem("boatName");
-
-const boatNumber =
-    localStorage.getItem("boatNumber");
-
-const loraId =
-    localStorage.getItem("loraId");
-
-const verified =
-    localStorage.getItem("phoneVerified");
-
-
-document.getElementById("displayBoatName")
-    .textContent =
-    boatName || "--";
-
-
-document.getElementById("displayBoatNumber")
-    .textContent =
-    boatNumber || "--";
-
-
-document.getElementById("displayLoraId")
-    .textContent =
-    loraId || "--";
-
-
-/* =====================================
-   MAP INITIALIZATION
-===================================== */
-
-/*
-   Starting location:
-   Coimbatore
-
-   This will be replaced automatically
-   when browser GPS is obtained.
-*/
-
-const defaultLatitude = 11.0168;
-const defaultLongitude = 76.9558;
-
-
-const map = L.map("map")
-    .setView(
-        [defaultLatitude, defaultLongitude],
-        13
-    );
-
-
-/* MAP TILES */
-
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        maxZoom: 19,
-        attribution:
-            "&copy; OpenStreetMap contributors"
-    }
-).addTo(map);
-
-
-/* =====================================
-   BOAT MARKER
-===================================== */
-
-let boatMarker =
-    L.marker([
-        defaultLatitude,
-        defaultLongitude
-    ])
-    .addTo(map);
-
-
-boatMarker.bindPopup(
-    "<b>🚤 " +
-    (boatName || "Marine Boat") +
-    "</b><br>" +
-    "LoRa ID: " +
-    (loraId || "--")
-);
-
-
-/* =====================================
-   UPDATE LOCATION
-===================================== */
-
-function updateBoatLocation(
-    latitude,
-    longitude
-) {
-
-
-    /* Update marker */
-
-    boatMarker.setLatLng([
-        latitude,
-        longitude
-    ]);
-
-
-    /* Move map */
-
-    map.setView(
-        [latitude, longitude],
-        15
-    );
-
-
-    /* Update coordinates */
-
-    document.getElementById("latitude")
-        .textContent =
-        latitude.toFixed(6);
-
-
-    document.getElementById("longitude")
-        .textContent =
-        longitude.toFixed(6);
-
-
-    /* Update popup */
-
-    boatMarker.bindPopup(
-
-        "<b>🚤 " +
-        (boatName || "Marine Boat") +
-        "</b><br>" +
-
-        "LoRa ID: " +
-        (loraId || "--") +
-
-        "<br><br>" +
-
-        "Latitude: " +
-        latitude.toFixed(6) +
-
-        "<br>" +
-
-        "Longitude: " +
-        longitude.toFixed(6)
-
-    );
-
-
-    document.getElementById("gpsStatus")
-        .textContent =
-        "🟢 GPS LOCATION ACTIVE";
-
-
-    document.getElementById("gpsStatus")
-        .style.color =
-        "#55d98b";
-
-}
-
-
-/* =====================================
-   GET BROWSER GPS
-===================================== */
-
-function getGPS() {
-
-
-    if (!navigator.geolocation) {
-
-        document.getElementById("gpsStatus")
-            .textContent =
-            "❌ GPS is not supported by this browser.";
-
-        return;
-
-    }
-
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            const latitude =
-                position.coords.latitude;
-
-            const longitude =
-                position.coords.longitude;
-
-
-            updateBoatLocation(
-                latitude,
-                longitude
-            );
-
-        },
-
-
-        function(error) {
-
-            console.log(error);
-
-
-            document.getElementById("gpsStatus")
-                .textContent =
-                "⚠️ GPS permission denied. Showing demo location.";
-
-
-            /* Show default Coimbatore point */
-
-            updateBoatLocation(
-                defaultLatitude,
-                defaultLongitude
-            );
-
-        },
-
-
-        {
-            enableHighAccuracy: true,
-
-            timeout: 10000,
-
-            maximumAge: 0
-        }
-
-    );
-
-}
-
-
-/* =====================================
-   START GPS
-===================================== */
-
-getGPS();
-
-
-/* =====================================
-   DEMO LORA MESSAGE
-===================================== */
-
-setTimeout(
-
-    function() {
-
-        document.getElementById("lastMessage")
-            .textContent =
-
-            "FROM:" +
-            (loraId || "LORA-001") +
-
-            " | GPS: ACTIVE" +
-
-            " | STATUS: NORMAL";
-
-    },
-
-    3000
-
-);
-
-
-</script>
-
+    <script src="js/tracking.js"></script>
 
 </body>
 
